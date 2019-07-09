@@ -13,53 +13,66 @@ def inputRead():
     #latiEnd = input("Please you put the latitude of your end point: ")
     longEnd = -19.094900
     latiEnd = 33.390560
-    longStart = -19.09
-    latiStart = 33.39
+    longStart = -19.094000
+    latiStart = 33.39080
 
 
     return longStart,latiStart,longEnd,latiEnd
 
 def analysisRequire(coordinate):
     longStart,latiStart,longEnd,latiEnd = coordinate
-    longTemp = longStart
-    latiTemp = latiStart
     longGap = 0.003050
     latiGap = 0.003220
     #requireList = [[],[]]
-    i = 0
+
 
     if longStart > longEnd:
-        if latiStart > latiEnd:
+        if latiStart < latiEnd:
+            print("Change nothing")
             pass
         else:
+            print("Change Long")
             latiMid = latiStart
             latiStart = latiEnd
             latiEnd = latiStart
     else:
-        if latiStart > latiEnd:
+        print("Change")
+        if latiStart < latiEnd:
             longMid = longStart
             longStart = longEnd
             longEnd = longStart
         else:
+            print("Change Lati and Long")
             latiMid = latiStart
             latiStart = latiEnd
             latiEnd = latiStart
+            longMid = longStart
+            longStart = longEnd
+            longEnd = longStart
 
-    requireList = [[],[]]
+    longTemp = longStart
+    latiTemp = latiStart
+    i = 0
+    requireList = [[]]
+
     while (True):
         latiTemp = latiStart
+        print(i)
         while (True):
+            print(i)
             requireList[i].append((longTemp, latiTemp))
             print("Add", longTemp," , " ,latiTemp)
             print(requireList)
-            latiTemp -= latiGap
-            if latiTemp < latiEnd:
-                requireList[i].append((longTemp, latiTemp))
+            if latiTemp > latiEnd:
+             #   requireList[i].append((longTemp, latiTemp))
                 break
+            latiTemp += latiGap
         i += 1
-        longTemp = longTemp - longGap
-        if longTemp + longGap < longEnd:
+        print(i,": i+1")
+        if longTemp < longEnd:
             break
+        longTemp = longTemp - longGap
+        requireList.append([])
     return requireList
 
 
@@ -67,8 +80,7 @@ if __name__ == "__main__":
     coordinate = inputRead()
     analysisRequire(coordinate)
     fileList = analysisRequire(coordinate)
-    print (fileList)
-
+    #downloadImage(fileList)
 
     longitude = -19.094900
     latitude = 33.3905603
@@ -78,14 +90,14 @@ if __name__ == "__main__":
         version='2018-03-19',
         iam_apikey='En8MaCZbEtnirUlnbkZncKBm2RqecjwClCzLOVK8WcYN'
     )
-
+'''
     image = imageGet(longitude,latitude)
 
     image.convert('RGB').save("res/1.jpg")
     original = open_image('res/1.jpg')
     new = convert_primary(original)
     save_image(new, 'res/new.png')
-
+'''
 
 
 

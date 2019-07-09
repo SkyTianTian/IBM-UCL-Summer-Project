@@ -7,7 +7,6 @@ longitude = -19.094900
 latitude = 33.3905603
 
 
-
 def hasRoad(image,long,lati,No):
     print("Saved in Road")
     global longitude,latitude,image2
